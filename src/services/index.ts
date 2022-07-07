@@ -13,7 +13,7 @@ export default abstract class Service<T> {
 
   read = async (): Promise<T[]> => this._model.read();
 
-  readeOne = async (id: string): Promise<T | null> => 
+  readOne = async (id: string): Promise<T | null> => 
     this._model.readOne(id);
 
   update = async (id: string, entity: T): Promise<T | null | ServiceError> =>
