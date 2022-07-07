@@ -1,10 +1,12 @@
 import { Car, CarSchema } from '../interfaces/CarInterface';
 import Service, { ServiceError } from '.';
-import CarModel from '../models/CarModel';
+// import CarModel from '../models/CarModel';
+import MongoModel from '../models';
 
 export default class CarService extends Service<Car> {
-  constructor(_model = new CarModel()) {
+  constructor(_model: MongoModel<Car>) {
     super(_model);
+    this._model = _model;
   }
 
   create = async (entity: Car): Promise<Car | null | ServiceError> => {
