@@ -4,7 +4,7 @@ import { Model } from '../interfaces/ModelInterface';
 export default abstract class MongoModel<T> implements Model<T> {
   constructor(protected _model: M<T & Document>) { }
 
-  create = async (entity: T): Promise<T> => this._model.create(entity);
+  create = async (entity: T): Promise<T> => this._model.create({ ...entity });
 
   read = async (): Promise<T[]> => this._model.find();
 
