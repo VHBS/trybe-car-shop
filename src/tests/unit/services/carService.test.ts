@@ -1,16 +1,16 @@
 import chai from 'chai';
 const { expect } = chai;
 import { CarDocument, carMongooseModel } from '../../../models/schemas/CarSchema';
-import { Model } from '../../../interfaces/ModelInterface';
 import CarService from '../../../services/CarService';
 import MongoModel from '../../../models';
+import { mockCreatedCar, mockNewCar } from '../mocks/carMocks';
 
 describe('Car Service', () => {
   class MockCarModel extends MongoModel<CarDocument> {
-    create = async (entity: CarDocument): Promise<CarDocument> => {
-      return entity;
+    create = async (_entity: CarDocument): Promise<CarDocument> => {
+      return mockCreatedCar;
     }
-    read= async (): Promise<CarDocument[]> => {
+    read = async (): Promise<CarDocument[]> => {
       return [];
     }
     readOne = async (id: string): Promise<CarDocument | null> => {
@@ -25,30 +25,9 @@ describe('Car Service', () => {
   }
 
   describe('Create car', () => {
-    const newCar = {
-      model: "Ferrari Maranello",
-      year: 1963,
-      color: "red",
-      buyValue: 3500000,
-      doorsQty: 2,
-      seatsQty: 2,
-      __v: 0
-    } as CarDocument;
-
-    const mockCreatedCar = {
-      model: "Ferrari Maranello",
-      year: 1963,
-      color: "red",
-      buyValue: 3500000,
-      doorsQty: 2,
-      seatsQty: 2,
-      _id: "62c62ed6cfa81704b0a5293e",
-      __v: 0
-    };
-    
     it('Success', async () => {
       const carService = new CarService(new MockCarModel(carMongooseModel));
-      const createdCar = await carService.create(newCar);
+      const createdCar = await carService.create(mockNewCar);
 
       expect(createdCar).deep.equal(mockCreatedCar)
     });
