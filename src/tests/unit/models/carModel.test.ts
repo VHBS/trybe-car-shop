@@ -3,8 +3,7 @@ import * as sinon from 'sinon';
 import chai from 'chai';
 import CarModel from '../../../models/CarModel';
 const { expect } = chai;
-
-import { Car } from '../../../interfaces/CarInterface';
+import { CarDocument, carMongooseModel } from '../../../models/schemas/CarSchema';
 
 describe('Car Model', () => {
 
@@ -17,7 +16,7 @@ describe('Car Model', () => {
       doorsQty: 2,
       seatsQty: 2,
       __v: 0
-    } as Car;
+    } as CarDocument;
 
     const mockCreatedCar = {
       model: "Ferrari Maranello",
@@ -39,7 +38,7 @@ describe('Car Model', () => {
     })
     
     it('Success', async () => {
-      const carModel = new CarModel();
+      const carModel = new CarModel(carMongooseModel);
       const createdCar = await carModel.create(newCar)
 
       expect(createdCar).deep.equal(mockCreatedCar)
