@@ -3,13 +3,14 @@ import {
   Response } from 'express';
 import Controller, { RequestWithBody, ResponseError } from '.';
 import { Car } from '../interfaces/CarInterface';
-import CarService from '../services/CarService';
+import Service from '../services';
+// import CarService from '../services/CarService';
 
 export default class CarController extends Controller<Car> {
   private _route: string;
 
   constructor(
-    service = new CarService(),
+    service: Service<Car>,
     route = '/cars',
   ) {
     super(service);
