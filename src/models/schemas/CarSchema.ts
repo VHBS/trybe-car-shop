@@ -1,4 +1,4 @@
-import { Document, Schema } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 import { Car } from '../../interfaces/CarInterface';
 
 export interface CarDocument extends Car, Document {}
@@ -31,4 +31,4 @@ const carSchema = new Schema<CarDocument>({
   },
 });
 
-export default carSchema;
+export const carMongooseModel = model<CarDocument>('car', carSchema);
