@@ -2,15 +2,14 @@ import {
   // Request, 
   Response } from 'express';
 import Controller, { RequestWithBody, ResponseError } from '.';
-import { Car } from '../interfaces/CarInterface';
+import { CarDocument } from '../models/schemas/CarSchema';
 import Service from '../services';
-// import CarService from '../services/CarService';
 
-export default class CarController extends Controller<Car> {
+export default class CarController extends Controller<CarDocument> {
   private _route: string;
 
   constructor(
-    service: Service<Car>,
+    service: Service<CarDocument>,
     route = '/cars',
   ) {
     super(service);
@@ -20,8 +19,8 @@ export default class CarController extends Controller<Car> {
   get route() { return this._route; }
 
   create = async (
-    req: RequestWithBody<Car>,
-    res: Response<Car | ResponseError>,
+    req: RequestWithBody<CarDocument>,
+    res: Response<CarDocument | ResponseError>,
   ): Promise<typeof res> => {
     try {
       const { body } = req;
