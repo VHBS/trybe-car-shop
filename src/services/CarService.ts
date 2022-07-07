@@ -1,15 +1,16 @@
-import { Car, CarSchema } from '../interfaces/CarInterface';
+import { CarSchema } from '../interfaces/CarInterface';
 import Service, { ServiceError } from '.';
-// import CarModel from '../models/CarModel';
 import MongoModel from '../models';
+import { CarDocument } from '../models/schemas/CarSchema';
 
-export default class CarService extends Service<Car> {
-  constructor(_model: MongoModel<Car>) {
+export default class CarService extends Service<CarDocument> {
+  constructor(_model: MongoModel<CarDocument>) {
     super(_model);
     this._model = _model;
   }
 
-  create = async (entity: Car): Promise<Car | null | ServiceError> => {
+  create = async (entity: CarDocument): 
+  Promise<CarDocument | null | ServiceError> => {
     const parsed = CarSchema.safeParse(entity);
     if (!parsed.success) {
       return { error: parsed.error };
@@ -17,13 +18,13 @@ export default class CarService extends Service<Car> {
     return this._model.create(entity);
   };
 
-  read = async (): Promise<Car[]> => this._model.read();
+  read = async (): Promise<CarDocument[]> => this._model.read();
 
-  readOne = async (id: string): Promise<Car | null> =>
+  readOne = async (id: string): Promise<CarDocument | null> =>
     this._model.readOne(id);
 
-  update = async (id: string, entity: Car): 
-  Promise<Car | null | ServiceError> => {
+  update = async (id: string, entity: CarDocument): 
+  Promise<CarDocument | null | ServiceError> => {
     const parsed = CarSchema.safeParse(entity);
     if (!parsed.success) {
       return { error: parsed.error };
@@ -31,6 +32,6 @@ export default class CarService extends Service<Car> {
     return this._model.update(id, entity);
   };
 
-  delete = async (id: string): Promise<Car | null> =>
+  delete = async (id: string): Promise<CarDocument | null> =>
     this._model.delete(id);
 }
