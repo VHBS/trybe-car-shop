@@ -1,5 +1,4 @@
 import express, { Router } from 'express';
-// import * as express from 'express';
 import connectToDatabase from './connection';
 
 class App {
