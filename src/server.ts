@@ -1,16 +1,16 @@
 import App from './app';
 import CarController from './controllers/CarController';
 import { Car } from './interfaces/CarInterface';
+import CarModel from './models/CarModel';
+import { carMongooseModel } from './models/schemas/CarSchema';
 import CustomRouter from './routes';
-
-// import exampleController from './controllers/controller-example';
-// import { example } from './interfaces/ExampleInterface';
-// exampleRouter.addRoute(exampleController);
-// server.addRouter(exampleRouter.router);
+import CarService from './services/CarService';
 
 const server = new App();
 
-const carController = new CarController();
+const carModel = new CarModel(carMongooseModel);
+const carService = new CarService(carModel);
+const carController = new CarController(carService);
 
 const carRouter = new CustomRouter<Car>();
 carRouter.addRoute(carController);
