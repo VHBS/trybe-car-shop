@@ -18,5 +18,5 @@ export default abstract class MongoModel<T> implements Model<T> {
     ) : null);
 
   delete = async (id: string): Promise<T | null> => (isValidObjectId(id) 
-    ? this._model.findOneAndUpdate({ _id: id }) : null);
+    ? this._model.findOneAndDelete({ _id: id }) : null);
 }
