@@ -29,6 +29,8 @@ const carSchema = new Schema<CarDocument>({
     type: Number,
     required: true,
   },
+}, {
+  versionKey: false,
 });
 
 export const carMongooseModel = model<CarDocument>('car', carSchema);
