@@ -34,4 +34,10 @@ export default abstract class Controller<T> {
     res: Response<T[] | ResponseError>,
     next: NextFunction,
   ): Promise<typeof res | void>;
+
+  abstract readOne(
+    req: Request<{ id: string; }>,
+    res: Response<T | ResponseError>,
+    next: NextFunction,
+  ): Promise<typeof res | void>;
 }
