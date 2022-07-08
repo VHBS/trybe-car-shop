@@ -1,11 +1,7 @@
-import { ZodError } from 'zod';
 import { Model } from '../interfaces/ModelInterface';
+import IService, { ServiceError } from './interfaces';
 
-export interface ServiceError {
-  error: ZodError;
-}
-
-export default abstract class Service<T> {
+export default abstract class Service<T> implements IService<T> {
   constructor(protected _model: Model<T>) {}
 
   create = async (entity: T): Promise< T | null | ServiceError> => 
