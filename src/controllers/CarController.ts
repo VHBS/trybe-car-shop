@@ -1,15 +1,16 @@
 import { 
+  NextFunction,
   // Request, 
   Response } from 'express';
 import Controller, { RequestWithBody, ResponseError } from '.';
 import { CarDocument } from '../models/schemas/CarSchema';
-import Service from '../services';
+import IService from '../services/interfaces';
 
 export default class CarController extends Controller<CarDocument> {
   private _route: string;
 
   constructor(
-    service: Service<CarDocument>,
+    service: IService<CarDocument>,
     route = '/cars',
   ) {
     super(service);
@@ -21,7 +22,8 @@ export default class CarController extends Controller<CarDocument> {
   create = async (
     req: RequestWithBody<CarDocument>,
     res: Response<CarDocument | ResponseError>,
-  ): Promise<typeof res> => {
+    next: NextFunction,
+  ): Promise<typeof res | void> => {
     try {
       const { body } = req;
       const car = await this._service.create(body);
@@ -29,7 +31,7 @@ export default class CarController extends Controller<CarDocument> {
       if ('error' in car) return res.status(400).json(car);
       return res.status(201).json(car);
     } catch (error) {
-      return res.status(500).json({ error: this.errors.internal });
+      next(this.errors.internal);
     }
   };
 }
