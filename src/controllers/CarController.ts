@@ -9,6 +9,8 @@ import IService from '../services/interfaces';
 export default class CarController extends Controller<CarDocument> {
   private _route: string;
 
+  private idInval = 'Id must have 24 hexadecimal characters';
+
   constructor(
     service: IService<CarDocument>,
     route = '/cars',
@@ -56,13 +58,27 @@ export default class CarController extends Controller<CarDocument> {
   ): Promise<typeof res | void> => {
     try {
       const { id } = req.params;
-      if (id.length < 24) {
-        return res.status(400).json({ 
-          error: 'Id must have 24 hexadecimal characters',
-        });
-      }
+      if (id.length < 24) return res.status(400).json({ error: this.idInval });
       const car = await this._service.readOne(id);
-      if (!car) return res.status(404).json({ error: 'Object not found' });
+      if (!car) return res.status(404).json({ error: this.errors.notFound });
+      return res.status(200).json(car);
+    } catch (error) {
+      next(this.errors.internal);
+    }
+  };
+
+  update = async (
+    req: RequestWithBody<{ id: string; } & CarDocument>,
+    res: Response<CarDocument | ResponseError>,
+    next: NextFunction,
+  ): Promise<typeof res | void> => {
+    try {
+      const { id } = req.params;
+      const { body } = req;
+      if (id.length < 24) return res.status(400).json({ error: this.idInval });
+      const car = await this._service.update(id, body);
+      if (!car) return res.status(404).json({ error: this.errors.notFound });
+      if ('error' in car) return res.status(400).json(car);
       return res.status(200).json(car);
     } catch (error) {
       next(this.errors.internal);
