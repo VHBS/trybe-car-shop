@@ -40,4 +40,10 @@ export default abstract class Controller<T> {
     res: Response<T | ResponseError>,
     next: NextFunction,
   ): Promise<typeof res | void>;
+
+  abstract update(
+    req: RequestWithBody<{ id: string; } & T>,
+    res: Response<T | ResponseError>,
+    next: NextFunction,
+  ): Promise<typeof res | void>;
 }
