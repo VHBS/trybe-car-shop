@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import Service from '../services';
+import { NextFunction, Request, Response } from 'express';
+import IService from '../services/interfaces';
 
 export type ResponseError = {
   error: unknown;
@@ -21,10 +21,11 @@ export default abstract class Controller<T> {
 
   protected errors = ControllerErrors;
 
-  constructor(protected _service: Service<T>) { }
+  constructor(protected _service: IService<T>) { }
 
   abstract create(
     req: RequestWithBody<T>,
     res: Response<T | ResponseError>,
-  ): Promise<typeof res>;
+    next: NextFunction,
+  ): Promise<typeof res | void>;
 }
