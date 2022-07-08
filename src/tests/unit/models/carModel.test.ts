@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import * as sinon from 'sinon';
 import chai from 'chai';
 import CarModel from '../../../models/CarModel';
