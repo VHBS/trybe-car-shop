@@ -1,5 +1,6 @@
 import { CarSchema } from '../interfaces/CarInterface';
-import Service, { ServiceError } from '.';
+import Service from '.';
+import { ServiceError } from './interfaces';
 import MongoModel from '../models';
 import { CarDocument } from '../models/schemas/CarSchema';
 
