@@ -48,4 +48,24 @@ export default class CarController extends Controller<CarDocument> {
       next(this.errors.internal);
     }
   };
+
+  readOne = async (
+    req: Request<{ id: string; }>,
+    res: Response<CarDocument | ResponseError>,
+    next: NextFunction,
+  ): Promise<typeof res | void> => {
+    try {
+      const { id } = req.params;
+      if (id.length < 24) {
+        return res.status(400).json({ 
+          error: 'Id must have 24 hexadecimal characters',
+        });
+      }
+      const car = await this._service.readOne(id);
+      if (!car) return res.status(404).json({ error: 'Object not found' });
+      return res.status(200).json(car);
+    } catch (error) {
+      next(this.errors.internal);
+    }
+  };
 }
