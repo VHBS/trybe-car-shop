@@ -28,4 +28,10 @@ export default abstract class Controller<T> {
     res: Response<T | ResponseError>,
     next: NextFunction,
   ): Promise<typeof res | void>;
+
+  abstract read(
+    req: Request,
+    res: Response<T[] | ResponseError>,
+    next: NextFunction,
+  ): Promise<typeof res | void>;
 }
