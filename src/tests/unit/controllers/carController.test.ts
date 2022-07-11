@@ -43,7 +43,7 @@ describe('Car Controller', () => {
       req.body = mockCreatedCar;
     });
 
-    it('Succsess', async () => {
+    it('Success', async () => {
       const carController = new CarController(new MockCarService());
       await carController.create(req, res, next);
 
